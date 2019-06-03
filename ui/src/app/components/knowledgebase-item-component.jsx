@@ -16,7 +16,7 @@ class KnowledgebaseItem extends Component {
         <div className="label">{ label }</div>
         <ul>
           <li>
-            <Tag body={'ID: ' + item.id + ', ' + item.displayName} uncapped full />
+            <Tag body={'ID: ' + item.id} uncapped full />
             <ul>
               {
                 Object.keys(item).map(function(key, index) {

@@ -23,7 +23,7 @@ class QueryInput extends Component {
   }
 
   handleTranscripts(transcripts) {
-    this.props.updateQuery(transcripts[0]);
+    this.props.updateQuery(transcripts[0].transcript);
     this.props.executeQuery();
   }
 
@@ -32,7 +32,7 @@ class QueryInput extends Component {
   }
 
   handleOnSubmit(event) {
-    this.props.executeQuery(this.props.query);
+    this.props.executeQuery();
     event.preventDefault();
   }
 

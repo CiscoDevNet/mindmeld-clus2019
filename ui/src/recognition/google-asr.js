@@ -76,7 +76,10 @@ export default class GoogleAsr extends EventEmitter {
       maxAlternatives: this._maxTranscripts
     }, this._key).then((result) => {
       let transcripts = result.data.results[0].alternatives.map((alt) => {
-        return alt.transcript;
+        return {
+          transcript: alt.transcript,
+          confidence: alt.confidence,
+        };
       });
       this.emit(GoogleAsr.ON_TRANSCRIPTS, transcripts);
       this._recognizeCallback && this._recognizeCallback(transcripts);

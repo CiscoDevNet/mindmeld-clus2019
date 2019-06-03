@@ -3,13 +3,12 @@ import get from 'lodash.get';
 
 
 const TOKEN = process.env.WEBEX_TOKEN || '';
-const URI = process.env.API_URI || 'https://assistant-nlp-intb.wbx2.com/assistant-nlp/api/v1/parse';
+const URI = 'http://127.0.0.1:7150/parse';
 
 export const query = async (body) => {
   if (typeof body === 'string') {
     body = {
-      text: body,
-      params: {'time_zone': "Europe/Brussels"}
+      text: body
     };
   }
 
@@ -30,7 +29,7 @@ export const query = async (body) => {
                     .map((item) => get(item, 'payload.text')),
         hints = get(directives.find((item) => item.name === 'ui-hint'), 'payload.text', []),
         targetDialogueState = get(data, 'frame.follow_up.target_state'),
-        entities = get(data, 'entities', [])
+        entities = get(data.request, 'entities', [])
                     .map((entity) => {
                       return {
                         text: entity.text,
@@ -38,25 +37,35 @@ export const query = async (body) => {
                         score: entity.score,
                         span: entity.span,
                         role: entity.role,
-                        value: (entity.value || {}),
+                        value: (entity.value || []),
                         children: (entity.children || []),
                       };
-                    }),
-        user_carousel = directives.find((item) => item.name === 'user-carousel'),
-        pmr_carousel = directives.find((item) => item.name === 'pmr-carousel');
+                    });
+
+  const kbObjects = [];
+  entities.map((entity) => {
+    entity['value'].map((value) => {
+      kbObjects.push(value);
+    });
+  });
+
+  let index = 0;
+  data.request.confidences.entities.map((entity) => {
+    entities[index]['score'] = entity[Object.keys(entity)[0]];
+    index++;
+  });
 
   return {
-    domain: data.domain,
-    intent: data.intent,
+    domain: data.request.domain,
+    intent: data.request.intent,
     entities,
     replies,
     hints,
     targetDialogueState,
-    user_carousel,
-    pmr_carousel,
     response: {
       ...data
     },
-    scores: data.scores,
+    scores: data.request.confidences,
+    kbObjects,
   };
 };

@@ -48,7 +48,7 @@ const RoutedContainer = withRouter(connect()(class Container extends React.Compo
         <Row className="sub-header text-center mb-3">
           <Col>Recent AI breakthroughs are making versatile and helpful voice and chat assistants possible for the first time.</Col>
           <Col>Using a voice or chat assistant is simple, but building one is among the hardest AI challenges that exist today.</Col>
-          <Col>To illustrate, consider an AI assistant that can understand anything you might ask a meeting assistant.</Col>
+          <Col>To illustrate, consider an AI assistant that can understand anything you might ask a food ordering assistant.</Col>
           <Col>To achieve human-like intelligence for use cases like this, Deep-Domain Conversational AI is required.</Col>
         </Row>
         <Row className="main-content">

@@ -17,8 +17,7 @@ class QuestionAnswerer extends Component {
 
   render() {
     const result = get(this.props, 'result', {});
-    const carousel = get(result, 'user_carousel', get(result, 'pmr_carousel', {}));
-    const items = carousel.payload || [];
+    const items = get(result, 'kbObjects', []);
     return (
       <Container className="section question-answerer">
         <Row>
