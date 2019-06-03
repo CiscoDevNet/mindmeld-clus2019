@@ -18,8 +18,9 @@ export default store => next => async action => {
         let transcripts = [];
         if (key) {
           transcripts = await asr.recognize();
+          console.log(transcripts);
         } else {
-          console.log("Using webkitSpeechRecognition.")
+          console.log("Using webkitSpeechRecognition.");
           transcripts = await recognition.recognize();
         }
         store.dispatch(actions.recognition.onEnd(transcripts));
