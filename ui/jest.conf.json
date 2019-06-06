@@ -1,0 +1,30 @@
+{
+  "verbose": true,
+  "testURL": "http://localhost/",
+  "moduleFileExtensions": [
+    "js",
+    "jsx"
+  ],
+  "unmockedModulePathPatterns": [
+    "react",
+    "react-dom",
+    "react-dom/test-utils",
+    "redux",
+    "react-redux",
+    "fbjs",
+    "enzyme",
+    "cheerio",
+    "htmlparser2",
+    "lodash",
+    "domhandler",
+    "object.assign",
+    "define-properties",
+    "function-bind",
+    "object-keys",
+    "object.values",
+    "es-abstract"
+  ],
+  "transformIgnorePatterns": [
+    "node_modules/?!(react-redux)"
+  ]
+}

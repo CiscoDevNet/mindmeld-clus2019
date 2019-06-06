@@ -55,15 +55,13 @@ def say_goodbye(request, responder):
 @app.handle(intent='help')
 def provide_help(request, responder):
     """
-    When the user asks for help, provide some sample queries they can try.
+    When the user asks for help, provide a help message
     """
-    # Respond with examples demonstrating how the user can order food from different restaurants.
-    # For simplicity, we have a fixed set of demonstrative queries here, but they could also be
-    # randomly sampled from a pool of example queries each time.
-    replies = ["I can help you order food delivery from your local restaurants. For example, "
-               "you can say 'I would like a pad see ew from Modern Thai' or 'I feel like "
-               "having a burrito.'"]
-    responder.reply(replies)
+    message = "I can help you order food delivery from your local restaurants. For example, "
+    "you can say 'I would like a pad see ew from Modern Thai' or 'I feel like "
+    "having a burrito.'"
+
+    # your code here
 
 
 @app.handle(intent='start_over')
@@ -94,24 +92,14 @@ def place_order(request, responder):
         responder.slots['restaurant_name'] = selected_restaurant['name']
 
         if len(request.frame.get('dishes', [])) > 0:
-            # If the user has already made his dish selections from the menu, proceed to place the
-            # order. In a real application, this would be done by calling an external API to
-            # process the transaction. Here, we just reply with a canned response confirming that
-            # the order has been placed.
-            replies = ['Great, your order from {restaurant_name} will be delivered in 30-45 '
-                       'minutes.']
-
-            # Clear the dialogue frame to start afresh for the next user request.
-            responder.frame = {}
+            # your code here
+            pass
         else:
-            # If no dishes have been requested, prompt the user to order something from the menu.
-            replies = ["I don't have any dishes in the basket yet. What would you like to order "
-                       "from {restaurant_name}?"]
+            # your code here
+            pass
     else:
-        # If no restaurant has been selected, prompt the user to make a selection.
-        replies = ["I'm sorry, you need to select a restaurant before placing an order."]
-
-    responder.reply(replies)
+        # your code here
+        pass
 
 
 @app.handle(intent='build_order')
@@ -183,36 +171,8 @@ def build_order(request, responder):
         responder.frame['dish_entities'] = dish_entities
 
         if selected_restaurant:
-            # If the user has requested one or more dishes and also selected a specific
-            # restaurant, add the requested dishes to the "check-out" basket. The basket contents
-            # are stored in the responder frame.
-
-            for dish_entity in dish_entities:
-                # Store the user-specified dish name for use in natural language responses.
-                responder.slots['dish_name'] = dish_entity['text']
-
-                # Resolve the dish entity to a knowledge base entry using restaurant information.
-                selected_dish = _resolve_dish(dish_entity, selected_restaurant)
-
-                if selected_dish:
-                    # If the dish entity could be successfully mapped to a specific entry on
-                    # the restaurant's menu, add it to our current list of dishes.
-                    selected_dishes.append(selected_dish)
-                else:
-                    # If the requested dish isn't available at the selected restaurant, or couldn't
-                    # be linked to a specific KB entry, notify the user and prompt to make a
-                    # different selection. In a real app, it would be useful to provide
-                    # recommendations for dishes similar to the originally requested one,
-                    # to assist the user.
-                    responder.reply("Sorry, I couldn't find anything called {dish_name} at "
-                                    "{restaurant_name}. Would you like to order something "
-                                    "else?")
-                    responder.listen()
-                    return
-
-            # Update the basket information in the dialogue frame after all the dish entities
-            # have been processed and mapped to their respective KB entries.
-            responder.frame['dishes'] = selected_dishes
+            # your code here
+            pass
         else:
             # If the user has requested one or more dishes, but not selected a restaurant yet,
             # prompt him to pick a restaurant from a list of suggestions. This suggestion list can

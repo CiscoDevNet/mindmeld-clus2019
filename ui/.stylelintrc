@@ -1,0 +1,8 @@
+{
+  "rules": {
+    "length-zero-no-unit": true,
+    "color-no-invalid-hex": true,
+    "declaration-block-no-duplicate-properties": true,
+    "declaration-no-important": true,
+  }
+}

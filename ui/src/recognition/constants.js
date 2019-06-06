@@ -1,0 +1,4 @@
+export const START = 'RECOGNITION_START';
+export const ON_START = 'RECOGNITION_ON_START';
+export const ON_END = 'RECOGNITION_ON_END';
+export const ON_ERROR = 'RECOGNITION_ON_ERROR';
