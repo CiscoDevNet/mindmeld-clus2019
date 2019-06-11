@@ -57,9 +57,9 @@ def provide_help(request, responder):
     """
     When the user asks for help, provide a help message
     """
-    message = "I can help you order food delivery from your local restaurants. For example, "
-    "you can say 'I would like a pad see ew from Modern Thai' or 'I feel like "
-    "having a burrito.'"
+    message = "I can help you order food delivery from your local restaurants. " \
+              "For example, you can say 'I would like a pad see ew from Modern Thai' " \
+              "or 'I feel like having a burrito.'"
 
     # your code here
 
