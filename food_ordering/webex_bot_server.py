@@ -30,7 +30,7 @@ CISCO_API_URL = 'https://api.ciscospark.com/v1'
 # Build the food ordering application
 configure_logs()
 nlp = NaturalLanguageProcessor('.')
-nlp.build()
+nlp.load()
 conv = Conversation(nlp=nlp, app_path='.')
 
 
