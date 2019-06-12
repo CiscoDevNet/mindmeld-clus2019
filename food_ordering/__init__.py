@@ -55,15 +55,13 @@ def say_goodbye(request, responder):
 @app.handle(intent='help')
 def provide_help(request, responder):
     """
-    When the user asks for help, provide some sample queries they can try.
+    When the user asks for help, provide a help message
     """
-    # Respond with examples demonstrating how the user can order food from different restaurants.
-    # For simplicity, we have a fixed set of demonstrative queries here, but they could also be
-    # randomly sampled from a pool of example queries each time.
-    replies = ["I can help you order food delivery from your local restaurants. For example, "
-               "you can say 'I would like a pad see ew from Modern Thai' or 'I feel like "
-               "having a burrito.'"]
-    responder.reply(replies)
+    message = "I can help you order food delivery from your local restaurants. " \
+              "For example, you can say 'I would like a pad see ew from Modern Thai' " \
+              "or 'I feel like having a burrito.'"
+
+    # your code here
 
 
 @app.handle(intent='start_over')
@@ -83,7 +81,6 @@ def place_order(request, responder):
     """
     When the user wants to place the order, call an external API to process the transaction and
     acknowledge the order completion status to the user.
-
     For this demo app, we just display a fixed response to indicate that an order has been placed.
     """
     # Get the user's restaurant selection from the dialogue frame.
@@ -94,21 +91,15 @@ def place_order(request, responder):
         responder.slots['restaurant_name'] = selected_restaurant['name']
 
         if len(request.frame.get('dishes', [])) > 0:
-            # If the user has already made his dish selections from the menu, proceed to place the
-            # order. In a real application, this would be done by calling an external API to
-            # process the transaction. Here, we just reply with a canned response confirming that
-            # the order has been placed.
-            replies = ['Great, your order from {restaurant_name} will be delivered in 30-45 '
-                       'minutes.']
+            replies = ['Great, your order from {restaurant_name} will be delivered in 30-45 minutes.']
 
-            # Clear the dialogue frame to start afresh for the next user request.
+            # Clear the dialogue frame to start afresh for the next user request.
             responder.frame = {}
         else:
             # If no dishes have been requested, prompt the user to order something from the menu.
-            replies = ["I don't have any dishes in the basket yet. What would you like to order "
-                       "from {restaurant_name}?"]
+            replies = [
+                "I don't have any dishes in the basket yet. What would you like to order from {restaurant_name}?"]
     else:
-        # If no restaurant has been selected, prompt the user to make a selection.
         replies = ["I'm sorry, you need to select a restaurant before placing an order."]
 
     responder.reply(replies)
@@ -170,7 +161,7 @@ def build_order(request, responder):
     # dishes ordered by the user.
 
     # First, get details on dish selections already made in previous turns from the dialogue frame.
-    selected_dishes = responder.frame.get('dishes', [])
+    selected_dishes = list(responder.frame.get('dishes', []))
 
     # Next, get all the recognized dish entities in the current user query.
     dish_entities = [e for e in request.entities if e['type'] == 'dish']
@@ -183,10 +174,6 @@ def build_order(request, responder):
         responder.frame['dish_entities'] = dish_entities
 
         if selected_restaurant:
-            # If the user has requested one or more dishes and also selected a specific
-            # restaurant, add the requested dishes to the "check-out" basket. The basket contents
-            # are stored in the responder frame.
-
             for dish_entity in dish_entities:
                 # Store the user-specified dish name for use in natural language responses.
                 responder.slots['dish_name'] = dish_entity['text']
@@ -209,10 +196,6 @@ def build_order(request, responder):
                                     "else?")
                     responder.listen()
                     return
-
-            # Update the basket information in the dialogue frame after all the dish entities
-            # have been processed and mapped to their respective KB entries.
-            responder.frame['dishes'] = selected_dishes
         else:
             # If the user has requested one or more dishes, but not selected a restaurant yet,
             # prompt him to pick a restaurant from a list of suggestions. This suggestion list can
@@ -247,6 +230,8 @@ def build_order(request, responder):
                 responder.listen()
 
             return
+
+    # your code here
 
     # We should now have all user-requested information up to this point (i.e. from this turn and
     # previous turns) reconciled into selected_restaurant and selected_dishes.
